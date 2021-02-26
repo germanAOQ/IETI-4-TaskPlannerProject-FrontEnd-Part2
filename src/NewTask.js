@@ -10,6 +10,7 @@ import Select from "@material-ui/core/Select";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -22,13 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const lista = [];
+
 function NewTask() {
   const classes = useStyles();
-  const [username, setUsername] = useState(0);
+  const [description, setDescription] = useState(0);
   const [responsable, setResponsable] = useState(0);
   const [status, setStatus] = React.useState("");
   const [fecha, setFecha] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  
+  const [elementos, setElementos] = React.useState([]);
+	
+  const historia = useHistory();
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
@@ -43,7 +50,7 @@ function NewTask() {
   };
 
   function handleTextChange(e) {
-    setUsername(e.target.value);
+    setDescription(e.target.value);
   }
 
   function handleResponsableChange(e) {
@@ -52,6 +59,15 @@ function NewTask() {
 
   function handleDateChange(e) {
     setFecha(e.target.value);
+  }
+  
+  function handleListChange(e) {
+	  lista.push({descripcion:description, respons:responsable, stat:status, fech:fecha	})
+	  historia.push({
+		pathname: "/inicio",
+		state : { detail: lista }
+	  });
+	  
   }
 
   return (
@@ -124,12 +140,12 @@ function NewTask() {
                 }}
               />
             </Grid>
-			<Grid
+			<Grid	
 								container
 								direction="column"
 								justify="flex-end"
 								alignItems="flex-end">
-								<Fab color="primary" aria-label="add" className="useStyles().fab">
+								<Fab color="primary" aria-label="add" className="useStyles().fab" onClick={handleListChange}>
 								  <CheckCircleIcon />
 								</Fab>
 							</Grid>
