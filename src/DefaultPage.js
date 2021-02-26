@@ -161,7 +161,9 @@ function DefaultPage(props){
 		historia.push("/");
 	}
 	
-	
+	function handleClick(){
+		historia.push("/newtask");
+	}
 	
 	return (
 		<React.Fragment>
@@ -268,7 +270,7 @@ function DefaultPage(props){
 								direction="column"
 								justify="flex-end"
 								alignItems="flex-end">
-								<Fab color="primary" aria-label="add" className="useStyles().fab">
+								<Fab color="primary" aria-label="add" className="useStyles().fab" onClick={handleClick}>
 								  <AddIcon />
 								</Fab>
 							</Grid>

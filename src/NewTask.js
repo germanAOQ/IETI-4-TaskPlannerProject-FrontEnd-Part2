@@ -7,6 +7,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -121,6 +124,15 @@ function NewTask() {
                 }}
               />
             </Grid>
+			<Grid
+								container
+								direction="column"
+								justify="flex-end"
+								alignItems="flex-end">
+								<Fab color="primary" aria-label="add" className="useStyles().fab">
+								  <CheckCircleIcon />
+								</Fab>
+							</Grid>
           </Grid>
         </div>
       </div>
