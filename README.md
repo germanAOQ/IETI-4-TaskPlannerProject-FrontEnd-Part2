@@ -1,6 +1,6 @@
 # Heroku Deploy
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](http:///young-waters-93438.herokuapp.com)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://floating-cove-98422.herokuapp.com/)
 
 # Azure Deploy
 
