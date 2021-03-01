@@ -68,8 +68,9 @@ function CenteredGrid(){
 	}
 	
 	function makeRegistro(){
-		localStorage.setItem(username,password);
-		alert("Usuario registrado satisfactoriamente");
+		//localStorage.setItem(username,password);
+		//alert("Usuario registrado satisfactoriamente");
+		historia.push("/registro");
 	}
 	
 		return(
