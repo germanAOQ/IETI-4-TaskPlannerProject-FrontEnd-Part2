@@ -119,6 +119,7 @@ function getModalStyle() {
 function DefaultPage(props) {
   const classes = useStyles();
   const historia = useHistory();
+  const [originalInformation, setOriginalInformation] = React.useState([]);
   const [reciveInfo, setReciveInfo] = React.useState([]);
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -324,9 +325,28 @@ function DefaultPage(props) {
     </div>
   );
 
-  function handleApply() {}
+
+  function handleApply() {
+	  
+	  const filterList = reciveInfo;
+	  const filterListReady = [];
+	  console.log(filterList[0].respons);
+	  console.log(responsable);
+	  console.log(statusSelect);
+	  console.log(date);	
+	  for(var i=0; i < reciveInfo.length; i++){
+		  if(filterList[i].respons == responsable && filterList[i].stat == statusSelect && filterList[i].fech == date){
+			  filterListReady.push(filterList[i]);
+			}
+		}
+	  console.log(filterListReady);
+	  setReciveInfo(filterListReady);
+	  
+  }
+
 
   function handleClearAll() {
+	  setReciveInfo(originalInformation);
 	  setResponsable("");
 	  setStatusSelect("");
 	  setDate("");
@@ -343,8 +363,9 @@ function DefaultPage(props) {
 
   const location = useLocation();
   const listaInformacion = [];
-  useEffect(() => {
+  const catchInformation = useEffect(() => {
     try {
+	  setOriginalInformation(location.state.detail);
       setReciveInfo(location.state.detail);
       console.log(location.state.detail);
     } catch (e) {
