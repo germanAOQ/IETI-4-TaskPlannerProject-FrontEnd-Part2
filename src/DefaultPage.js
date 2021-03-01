@@ -124,6 +124,8 @@ function DefaultPage(props) {
   const [open, setOpen] = React.useState(false);
   const [openSelect, setOpenSelect] = React.useState(false);
   const [statusSelect, setStatusSelect] = React.useState("");
+  const [responsable, setResponsable] = React.useState("");
+  const [date, setDate] = React.useState("");
 
   const LoginView = () => <Login />;
 
@@ -221,11 +223,17 @@ function DefaultPage(props) {
     setOpenSelect(false);
   };
 
-  function handleResponsableModalChange(e) {}
+  function handleResponsableModalChange(e) {
+	  setResponsable(e.target.value);
+  }
 
-  function handleStatusModalChange(e) {}
+  function handleStatusModalChange(e) {
+	  setStatusSelect(e.target.value);
+  }
 
-  function handleDateModalChange(e) {}
+  function handleDateModalChange(e) {
+	  setDate(e.target.value);
+  }
 
   const bodyModal = (
     <div style={modalStyle} className={classes.paper}>
@@ -248,6 +256,7 @@ function DefaultPage(props) {
           <Grid item xs={12}>
             <TextField
               required
+			  value = {responsable}
               id="standard-required"
               style={{ margin: 8 }}
               placeholder="Responsable"
@@ -282,6 +291,7 @@ function DefaultPage(props) {
           <Grid item xs={12}>
             <TextField
               fullWidth
+			  value = {date}
               id="date"
               label="Due date"
               type="date"
@@ -316,7 +326,11 @@ function DefaultPage(props) {
 
   function handleApply() {}
 
-  function handleClearAll() {}
+  function handleClearAll() {
+	  setResponsable("");
+	  setStatusSelect("");
+	  setDate("");
+  }
 
   function handleLogOut() {
 	localStorage.removeItem("sesion");
