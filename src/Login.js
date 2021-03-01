@@ -51,7 +51,8 @@ function CenteredGrid(){
 	
 	
 	function handleClick(){
-		let isLogin = localStorage.getItem(username) === password;
+		let cadenaDatos = localStorage.getItem(username).split(",");
+		let isLogin = cadenaDatos[1] === password;
 		if(isLogin){
 			historia.push("/inicio?username="+username);
 		}else{

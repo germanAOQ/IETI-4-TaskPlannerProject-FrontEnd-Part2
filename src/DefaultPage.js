@@ -171,7 +171,7 @@ function DefaultPage(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {query.get("username")}
+                  {localStorage.getItem(query.get("username")).split(",")[0]}
                 </Typography>
               </React.Fragment>
             }
