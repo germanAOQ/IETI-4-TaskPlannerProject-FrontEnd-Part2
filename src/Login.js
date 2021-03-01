@@ -54,7 +54,8 @@ function CenteredGrid(){
 		let cadenaDatos = localStorage.getItem(username).split(",");
 		let isLogin = cadenaDatos[1] === password;
 		if(isLogin){
-			historia.push("/inicio?username="+username);
+			localStorage.setItem("sesion",username);
+			historia.push("/inicio");
 		}else{
 			alert("Usuario no registrado, oprima el botón Create Account");
 		}

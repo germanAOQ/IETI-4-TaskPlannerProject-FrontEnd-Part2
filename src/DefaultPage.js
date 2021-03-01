@@ -162,7 +162,7 @@ function DefaultPage(props) {
             <Avatar />
           </ListItemAvatar>
           <ListItemText
-            primary={query.get("username")}
+            primary={localStorage.getItem("sesion")}
             secondary={
               <React.Fragment>
                 <Typography
@@ -171,7 +171,8 @@ function DefaultPage(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {localStorage.getItem(query.get("username")).split(",")[0]}
+				  
+                  {localStorage.getItem(localStorage.getItem("sesion")).split(",")[0]}
                 </Typography>
               </React.Fragment>
             }
@@ -318,6 +319,7 @@ function DefaultPage(props) {
   function handleClearAll() {}
 
   function handleLogOut() {
+	localStorage.removeItem("sesion");
     historia.push("/");
   }
 
