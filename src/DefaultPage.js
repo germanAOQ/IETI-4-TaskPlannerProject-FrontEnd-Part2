@@ -36,8 +36,18 @@ import {
 import CardHeader from "@material-ui/core/CardHeader";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import Modal from "@material-ui/core/Modal";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -77,16 +87,43 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  paper: {
+    position: "absolute",
+    width: 600,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 480,
+  },
 }));
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
 function DefaultPage(props) {
   const classes = useStyles();
   const historia = useHistory();
   const [reciveInfo, setReciveInfo] = React.useState([]);
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const [openSelect, setOpenSelect] = React.useState(false);
+  const [statusSelect, setStatusSelect] = React.useState("");
 
   const LoginView = () => <Login />;
 
@@ -134,7 +171,7 @@ function DefaultPage(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {query.get("username")}@mail.escuelaing.edu.co
+                  {query.get("username")}
                 </Typography>
               </React.Fragment>
             }
@@ -155,11 +192,130 @@ function DefaultPage(props) {
               </ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItem>
+            <ListItem alignItems="center" button onClick={handleOpen}>
+              <ListItemIcon>
+                <FilterListIcon />
+              </ListItemIcon>
+              <ListItemText primary="Task Filters" />
+            </ListItem>
           </div>
         </List>
       </Router>
     </div>
   );
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSelectOpen = () => {
+    setOpenSelect(true);
+  };
+
+  const handleSelectClose = () => {
+    setOpenSelect(false);
+  };
+
+  function handleResponsableModalChange(e) {}
+
+  function handleStatusModalChange(e) {}
+
+  function handleDateModalChange(e) {}
+
+  const bodyModal = (
+    <div style={modalStyle} className={classes.paper}>
+      <Grid
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <h1 style={{ fontSize: "50px" }}>TASK FILTERS</h1>
+      </Grid>
+      <Container maxWidth="sm">
+        <Grid
+          containter
+          direction="column"
+          justify="center"
+          alignItems="center"
+          spacing={3}
+        >
+          <Grid item xs={12}>
+            <TextField
+              required
+              id="standard-required"
+              style={{ margin: 8 }}
+              placeholder="Responsable"
+              onChange={handleResponsableModalChange}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-controlled-open-select-label">
+              Status
+            </InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={openSelect}
+              onClose={handleSelectClose}
+              onOpen={handleSelectOpen}
+              value={statusSelect}
+              onChange={handleStatusModalChange}
+            >
+              <MenuItem value={"Ready"}>Ready</MenuItem>
+              <MenuItem value={"In Progress"}>In Progress</MenuItem>
+              <MenuItem value={"Done"}>Done</MenuItem>
+            </Select>
+          </FormControl>
+          <br></br>
+          <br></br>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="date"
+              label="Due date"
+              type="date"
+              className={classes.textField}
+              onChange={handleDateModalChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+          justify="flex-start"
+          alignItems="stretch"
+        >
+          <br></br>
+          <br></br>
+          <Button variant="contained" onClick={handleApply}>
+            Apply
+          </Button>
+          <br></br>
+          <br></br>
+          <Button variant="contained" onClick={handleClearAll}>
+            Clear All
+          </Button>
+        </Grid>
+      </Container>
+    </div>
+  );
+
+  function handleApply() {}
+
+  function handleClearAll() {}
 
   function handleLogOut() {
     historia.push("/");
@@ -191,15 +347,15 @@ function DefaultPage(props) {
         />
         <CardContent className={classes.cardContent}>
           <Typography variant="h5" component="h2">
-			{elemento.descripcion}
+            {elemento.descripcion}
           </Typography>
           <Typography variant="body2" component="p">
             <br></br>
-				{elemento.stat} - {elemento.fech}
+            {elemento.stat} - {elemento.fech}
           </Typography>
           <br></br>
           <Typography variant="h5" component="h2">
-			{elemento.respons}
+            {elemento.respons}
           </Typography>
         </CardContent>
       </Card>
@@ -222,20 +378,14 @@ function DefaultPage(props) {
       </div>
       <div className={useStyles().heroContent}>
         <Container>
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Tareas
+          <Typography align="center" color="textPrimary" gutterBottom>
+            <h1 style={{ fontSize: "60px" }}>Tasks</h1>
           </Typography>
         </Container>
       </div>
       <Container className={useStyles().cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-			{dynamicList}
+          {dynamicList}
         </Grid>
         <br></br>
         <Grid
@@ -253,6 +403,14 @@ function DefaultPage(props) {
             <AddIcon />
           </Fab>
         </Grid>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {bodyModal}
+        </Modal>
       </Container>
     </React.Fragment>
   );
