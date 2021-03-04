@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,10 @@ function UserProfile() {
       }
     }
   }
+  
+  function handleBack() {
+	  historia.push("/");
+  }
 
   function handleFullNameChange(e) {
     setFullName(e.target.value);
@@ -54,9 +59,23 @@ function UserProfile() {
   function handleConfirmPasswordChange(e) {
     setConfirmPassword(e.target.value);
   }
+  
 
   return (
     <div className={classes.root}>
+	<Container fixed>
+	<Grid
+		  container
+          direction="row"
+          justify="flex-start"
+          alignItems="baseline"
+          spacing={3}
+		  >
+		  <Button onClick={handleBack}>
+			<ArrowBackIcon style={{ fontSize: 50}}/>
+		  </Button>
+		  </Grid>
+		 </Container>
       <h1 style={{ fontSize: "60px" }}>Registration</h1>
       <Grid container direction="column" justify="center" alignItems="center">
         <PersonIcon style={{ fontSize: 120 }} />

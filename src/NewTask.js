@@ -11,6 +11,9 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useHistory } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Button from "@material-ui/core/Button";
+
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -69,10 +72,29 @@ function NewTask() {
 	  });
 	  
   }
+  
+  function handleBack() {
+	  historia.push("/inicio");
+  }
 
   return (
+  <div>
+   <Container fixed>
+	<Grid
+		  container
+          direction="row"
+          justify="flex-start"
+          alignItems="baseline"
+          spacing={3}
+		  >
+		  <Button onClick={handleBack}>
+			<ArrowBackIcon style={{ fontSize: 50}}/>
+		  </Button>
+		  </Grid>
+		 </Container>
     <Container maxWidth="sm">
-      <div>
+      
+	 
         <h1 style={{ fontSize: "100px" }}>New Task</h1>
         <div>
           <Grid
@@ -151,8 +173,9 @@ function NewTask() {
 							</Grid>
           </Grid>
         </div>
-      </div>
+      
     </Container>
+	</div>
   );
 }
 

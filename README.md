@@ -6,6 +6,11 @@
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://taskplaner2.azurewebsites.net)
 
+# Credenciales                                
+```
+Username: userIETI                                                    
+Password: passwordIETI                     
+```
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -174,8 +174,11 @@ function DefaultPage(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-				  
-                  {localStorage.getItem(localStorage.getItem("sesion")).split(",")[0]}
+                  {
+                    localStorage
+                      .getItem(localStorage.getItem("sesion"))
+                      .split(",")[0]
+                  }
                 </Typography>
               </React.Fragment>
             }
@@ -225,15 +228,15 @@ function DefaultPage(props) {
   };
 
   function handleResponsableModalChange(e) {
-	  setResponsable(e.target.value);
+    setResponsable(e.target.value);
   }
 
   function handleStatusModalChange(e) {
-	  setStatusSelect(e.target.value);
+    setStatusSelect(e.target.value);
   }
 
   function handleDateModalChange(e) {
-	  setDate(e.target.value);
+    setDate(e.target.value);
   }
 
   const bodyModal = (
@@ -257,7 +260,7 @@ function DefaultPage(props) {
           <Grid item xs={12}>
             <TextField
               required
-			  value = {responsable}
+              value={responsable}
               id="standard-required"
               style={{ margin: 8 }}
               placeholder="Responsable"
@@ -292,7 +295,7 @@ function DefaultPage(props) {
           <Grid item xs={12}>
             <TextField
               fullWidth
-			  value = {date}
+              value={date}
               id="date"
               label="Due date"
               type="date"
@@ -325,35 +328,61 @@ function DefaultPage(props) {
     </div>
   );
 
-
   function handleApply() {
-	  
-	  const filterList = reciveInfo;
-	  const filterListReady = [];
-	  console.log(filterList[0].respons);
-	  console.log(responsable);
-	  console.log(statusSelect);
-	  console.log(date);	
-	  for(var i=0; i < reciveInfo.length; i++){
-		  if(filterList[i].respons == responsable && filterList[i].stat == statusSelect && filterList[i].fech == date){
-			  filterListReady.push(filterList[i]);
-			}
-		}
-	  console.log(filterListReady);
-	  setReciveInfo(filterListReady);
-	  
+    const filterList = reciveInfo;
+    const filterListReady = [];
+    for (var i = 0; i < reciveInfo.length; i++) {
+      if (
+        filterList[i].respons == responsable &&
+        filterList[i].stat == statusSelect &&
+        filterList[i].fech == date
+      ) {
+        filterListReady.push(filterList[i]);
+      } else if (responsable == "" && statusSelect != "" && date != "") {
+        if (filterList[i].stat == statusSelect && filterList[i].fech == date) {
+          filterListReady.push(filterList[i]);
+        }
+      } else if (responsable != "" && statusSelect == "" && date != "") {
+        if (
+          filterList[i].respons == responsable &&
+          filterList[i].fech == date
+        ) {
+          filterListReady.push(filterList[i]);
+        }
+      } else if (responsable != "" && statusSelect != "" && date == "") {
+        if (
+          filterList[i].respons == responsable &&
+          filterList[i].stat == statusSelect
+        ) {
+          filterListReady.push(filterList[i]);
+        }
+      } else if (responsable != "" && statusSelect == "" && date == "") {
+        if (filterList[i].respons == responsable) {
+          filterListReady.push(filterList[i]);
+        }
+      } else if (responsable == "" && statusSelect != "" && date == "") {
+        if (filterList[i].stat == statusSelect) {
+          filterListReady.push(filterList[i]);
+        }
+      } else if (responsable == "" && statusSelect == "" && date != "") {
+        if (filterList[i].fech == date) {
+          filterListReady.push(filterList[i]);
+        }
+      }
+    }
+    console.log(filterListReady);
+    setReciveInfo(filterListReady);
   }
 
-
   function handleClearAll() {
-	  setReciveInfo(originalInformation);
-	  setResponsable("");
-	  setStatusSelect("");
-	  setDate("");
+    setReciveInfo(originalInformation);
+    setResponsable("");
+    setStatusSelect("");
+    setDate("");
   }
 
   function handleLogOut() {
-	localStorage.removeItem("sesion");
+    localStorage.removeItem("sesion");
     historia.push("/");
   }
 
@@ -365,7 +394,7 @@ function DefaultPage(props) {
   const listaInformacion = [];
   const catchInformation = useEffect(() => {
     try {
-	  setOriginalInformation(location.state.detail);
+      setOriginalInformation(location.state.detail);
       setReciveInfo(location.state.detail);
       console.log(location.state.detail);
     } catch (e) {
